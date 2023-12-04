@@ -1,6 +1,7 @@
 import pandas as pd
 import math
 
+
 # 1.
 def fourBitPalindrome(bitNum):
     count = 0
@@ -41,7 +42,7 @@ eBinary = open("BINARY_DIGITS_OF_E.txt", "r")
 print(fourBitPalindrome(eBinary.read()))
 
 # 6.
-data = pd.read_csv('BC_distances.csv')
+data = pd.read_csv('BC_distances.csv')  # pandas library
 cities = data.columns.tolist()
 num_cities = len(cities)
 adj_matrix = data.to_numpy()
@@ -81,7 +82,7 @@ for i, city in enumerate(cities):
     print()
 
 results_csv = pd.DataFrame(shortest_dist_results, index=cities)
-results_csv.to_csv('BC_shorted_paths.csv', index=True)
+results_csv.to_csv('BC_shortest_paths.csv', index=True)
 
 # 7.
 # initializing string
