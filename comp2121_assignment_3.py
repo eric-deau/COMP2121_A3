@@ -41,7 +41,47 @@ eBinary = open("BINARY_DIGITS_OF_E.txt", "r")
 print(fourBitPalindrome(eBinary.read()))
 
 # 6.
+data = pd.read_csv('BC_distances.csv')
+cities = data.columns.tolist()
+num_cities = len(cities)
+adj_matrix = data.to_numpy()
 
+
+def dijkstra(start):
+    visited = [False] * num_cities
+    distance = [math.inf] * num_cities
+    distance[start] = 0
+
+    for _ in range(num_cities):
+        min_dist = math.inf
+        min_index = -1
+
+        for i in range(num_cities):
+            if not visited[i] and distance[i] < min_dist:
+                min_dist = distance[i]
+                min_index = i
+
+        visited[min_index] = True
+
+        for i in range(num_cities):
+            if not visited[i] and adj_matrix[min_index][i] > 0:
+                if distance[i] > distance[min_index] + adj_matrix[min_index][i]:
+                    distance[i] = distance[min_index] + adj_matrix[min_index][i]
+
+    return distance
+
+
+shortest_dist_results = {}
+for i, city in enumerate(cities):
+    shortest_distances = dijkstra(i)
+    print(f"Shortest distances from {city}:")
+    for j, dist in enumerate(shortest_distances):
+        print(f"To {cities[j]}: {dist} km")
+        shortest_dist_results[city] = shortest_distances
+    print()
+
+results_csv = pd.DataFrame(shortest_dist_results, index=cities)
+results_csv.to_csv('BC_shorted_paths.csv', index=True)
 
 # 7.
 # initializing string
